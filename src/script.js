@@ -82,16 +82,16 @@ function displayForecast(response) {
       forecastHtml =
         forecastHtml +
         `
-       <div class="wforecast-day">
+       <div class="forecast-day">
         <div class="forecast-date">${formatDay(day.time)}</div>
         <img src="${day.condition.icon_url}" class="forecast-icon" />
         <div class="forecast-temperature">
           <div class="forecast-temp-max">
-            <strong>${Math.round(day.temperature.maximum)}</strong>
-          </div>
+            <strong>${Math.round(day.temperature.maximum)}º</strong>
+          </div>   
           <div class="forecast-temp-min">${Math.round(
             day.temperature.minimum
-          )}</div>
+          )}º</div>
         </div>
       </div>`;
     }
