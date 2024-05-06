@@ -2,7 +2,7 @@ function displayTemperature(response) {
   let temperatureElement = document.querySelector("#current-temperature");
   let temperature = Math.round(response.data.temperature.current);
   let cityElement = document.querySelector("#current-city");
-  let descriptionWeater = document.querySelector("#weather-description");
+  let descriptionWeather = document.querySelector("#weather-description");
   let humidityElement = document.querySelector("#humidity");
   let windElement = document.querySelector("#wind");
   let iconElement = document.querySelector("#icon");
@@ -10,7 +10,7 @@ function displayTemperature(response) {
   iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-icon" />`;
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   windElement.innerHTML = `${response.data.wind.speed}km/h`;
-  descriptionWeater.innerHTML = response.data.condition.description;
+  descriptionWeather.innerHTML = response.data.condition.description;
   cityElement.innerHTML = response.data.city;
   temperatureElement.innerHTML = temperature;
 
@@ -88,7 +88,7 @@ function displayForecast(response) {
         <div class="forecast-temperature">
           <div class="forecast-temp-max">
             <strong>${Math.round(day.temperature.maximum)}º</strong>
-          </div>   
+          </div>
           <div class="forecast-temp-min">${Math.round(
             day.temperature.minimum
           )}º</div>
