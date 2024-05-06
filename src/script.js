@@ -17,15 +17,17 @@ function displayTemperature(response) {
   getForecast(response.data.city);
 }
 
-function search(event) {
-  event.preventDefault();
-  let searchInputElement = document.querySelector("#search-input");
-  let city = searchInputElement.value;
-
+function searchCity(city) {
   let apiKey = "b2a5adcct04b33178913oc335f405433";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
 
   axios.get(apiUrl).then(displayTemperature);
+}
+
+function handleSearch(event) {
+  event.preventDefault();
+  let searchInputElement = document.querySelector("#search-input");
+  searchCity(searchInputElement.value);
 }
 
 function formatDate(date) {
@@ -55,12 +57,8 @@ function formatDate(date) {
   return `${formattedDay} ${hours}:${minutes}`;
 }
 
-let searchForm = document.querySelector("#search-form");
-searchForm.addEventListener("submit", search);
-
 let currentDateELement = document.querySelector("#current-date");
 let currentDate = new Date();
-
 currentDateELement.innerHTML = formatDate(currentDate);
 
 function getForecast(city) {
@@ -69,25 +67,41 @@ function getForecast(city) {
   axios(apiUrl).then(displayForecast);
 }
 
-function displayForecast() {
-  let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[date.getDay()];
+}
+
+function displayForecast(response) {
   let forecastHtml = "";
 
-  days.forEach(function (day) {
-    forecastHtml =
-      forecastHtml +
-      `
-      <div class="forecast-dates">
-          <div class="forecast-day">${day}</div>
-           🌤️
-          <div class="forecast-temperature">
-          <span class="temp-max">22</span>  <span class="temp-min">18</span>
-          </div> `;
+  response.data.daily.forEach(function (day, index) {
+    if (index < 5) {
+      forecastHtml =
+        forecastHtml +
+        `
+       <div class="wforecast-day">
+        <div class="forecast-date">${formatDay(day.time)}</div>
+        <img src="${day.condition.icon_url}" class="forecast-icon" />
+        <div class="forecast-temperature">
+          <div class="forecast-temp-max">
+            <strong>${Math.round(day.temperature.maximum)}</strong>
+          </div>
+          <div class="forecast-temp-min">${Math.round(
+            day.temperature.minimum
+          )}</div>
+        </div>
+      </div>`;
+    }
   });
 
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = forecastHtml;
 }
 
-displayForecast();
-search("Edinburgh");
+let searchForm = document.querySelector("#search-form");
+searchForm.addEventListener("submit", handleSearch);
+
+searchCity("Cairo");

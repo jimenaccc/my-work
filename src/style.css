@@ -93,7 +93,7 @@ main {
   justify-content: space-around;
 }
 
-.forecast-dates {
+.forecast-date {
   text-align: center;
 }
 
@@ -101,19 +101,24 @@ main {
   font-size: 17px;
   color: grey;
   margin-bottom: 10px;
+  text-align: center;
+}
+
+.forecast-icon {
+  width: 60px;
 }
 
 .forecast-temperature {
   font-size: 15px;
   color: black;
   margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
-.temp-max {
+.forecast-temp {
   opacity: 0.9;
-}
-.temp-min {
-  opacity: 0.7;
 }
 
 footer {
