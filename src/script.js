@@ -13,6 +13,8 @@ function displayTemperature(response) {
   descriptionWeater.innerHTML = response.data.condition.description;
   cityElement.innerHTML = response.data.city;
   temperatureElement.innerHTML = temperature;
+
+  getForecast(response.data.city);
 }
 
 function search(event) {
@@ -60,3 +62,32 @@ let currentDateELement = document.querySelector("#current-date");
 let currentDate = new Date();
 
 currentDateELement.innerHTML = formatDate(currentDate);
+
+function getForecast(city) {
+  apiKey = "b2a5adcct04b33178913oc335f405433";
+  apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios(apiUrl).then(displayForecast);
+}
+
+function displayForecast() {
+  let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
+  let forecastHtml = "";
+
+  days.forEach(function (day) {
+    forecastHtml =
+      forecastHtml +
+      `
+      <div class="forecast-dates">
+          <div class="forecast-day">${day}</div>
+           🌤️
+          <div class="forecast-temperature">
+          <span class="temp-max">22</span>  <span class="temp-min">18</span>
+          </div> `;
+  });
+
+  let forecastElement = document.querySelector("#forecast");
+  forecastElement.innerHTML = forecastHtml;
+}
+
+displayForecast();
+search("Edinburgh");
